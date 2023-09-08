@@ -1,6 +1,6 @@
 import os
-#import random
-#import string
+import random
+import string
 
 # Crear una lista vacía para almacenar los libros
 libros = []
@@ -60,16 +60,35 @@ def gestionar_devolucion():
             else:
                 print("No hay libros prestados")
             return
-        print("Libro no encontrado")
+    print("Libro no encontrado")
 
+# Función para generar un código aleatorio de 8 caracteres
+# Parte de la funcion 3
+def generar_nuevo_codigo():
+    characters = string.ascii_letters + string.digits
+    cod = ''.join(random.choice(characters) for i in range(8))
+    return cod
 
-
-
+# Funcion para registrar un nuevo libro
+# Opcion3
+def registrar_nuevo_libro():
+    codigo = generar_nuevo_codigo() # Llamada a la funcion
+    titulo = input("Ingrese el titulo del libro: ") # Se registra el titulo del libro
+    autor = input("Ingrese el nombre del autor: ") # Se registra el nombre del autor
+    cant_ej_ad = int(input("Ingrese la cantidad de ejemplares disponibles: ")) #Pregunta cuantos libros hay disponible
+    cant_ej_pr = 0 # Se inicializa con 0 libros prestados
+    nuevo_libro = {'cod': codigo, 'cant_ej_ad': cant_ej_ad,'cant_ej_pr': cant_ej_pr, 'titulo': titulo, 'autor': autor}
+    libros.append(nuevo_libro)
+    print("Libro registrado con éxito.")
+    print(f"Código del libro: {codigo}")
+        
+        
+# Programa principal
 print("Bienvenido al sistema de la biblioteca 'José Manuel Estrada'")
 respuesta = input("Presione una tecla para continuar....")
 while respuesta != "salir" or respuesta == 6:
     mostrar_menu()
-    opcion = input("\nIngrese la opción de menú: ")
+    opcion = input("\nIngrese la opcion de menu: ")
     os.system("cls")  # Limpiar pantalla
 
     if opcion == "1":
@@ -77,7 +96,7 @@ while respuesta != "salir" or respuesta == 6:
     elif opcion == "2":
         gestionar_devolucion()
     elif opcion == "3":
-        print("registrar_nuevo_libro()")
+        registrar_nuevo_libro()
     elif opcion == "4":
         print("eliminar_ejemplar_libro()")
     elif opcion == "5":
@@ -87,6 +106,6 @@ while respuesta != "salir" or respuesta == 6:
         print("\n")
         break
     else:
-        print("Ingrese una opción válida.")
+        print("Ingrese una opcion valida.")
 
     input("Presione una tecla para continuar....")
