@@ -6,6 +6,7 @@ import os
 libros = []
 
 # Añadir los diccionarios a la lista
+# Se usa el metodo .append para agregar los codigos, cantidad de libros prestados y adquiridos, el nombre del autor y los titulos 
 libros.append({'cod': 'CRBJsAkS', 'cant_ej_ad': 3, 'cant_ej_pr': 1,"titulo": "Cien años de soledad", "autor": "Gabriel García Márquez"})
 libros.append({'cod': 'QgfV4j3c', 'cant_ej_ad': 4, 'cant_ej_pr': 2,"titulo": "El principito", "autor": "Antoine de Saint-Exupéry"})
 libros.append({'cod': 'adOd09UE', 'cant_ej_ad': 1, 'cant_ej_pr': 0,"titulo": "El código Da Vinci", "autor": "Dan Brown"})
@@ -20,26 +21,46 @@ def mostrar_menu():
     print("5) Mostrar ejemplares prestados")
     print("6) Salir")
 
-# Función para gestionar el préstamo de un libro
+# Funcion para gestionar el prestamo de un libro
+# Opcion 1
 def gestionar_prestamo():
-    codigo = input("Ingrese el código del libro: ")
-    for libro in libros: # Itera en el arreglo libros[]
-        if libro['cod'] == codigo:
-            if libro['cant_ej_ad'] > 0:
+    codigo = input("Ingrese el código del libro: ") # El codigo que se introduzca se va almacenar en la variable codigo
+    for libro in libros: # Itera sobre arreglo libros[]
+        if libro['cod'] == codigo: # Compara que el codigo que se introduzco en el input sea igual al que esta en el arreglo
+            if libro['cant_ej_ad'] > 0: 
                 print(f"Autor: {libro['autor']}")
                 print(f"Título: {libro['titulo']}")
                 print(f"Cantidad de ejemplares disponibles: {libro['cant_ej_ad']}")
-                confirmar = input("¿Desea confirmar el préstamo? (si/no): ")
+                confirmar = input("¿Desea confirmar el prestamo? (si/no): ")
                 if confirmar.lower() == "si" or confirmar.lower() == "s": # Solamente se confirma con "s" o "si"
-                    libro['cant_ej_ad'] -= 1 # Del total de libros se resta porque se adquiere
-                    libro['cant_ej_pr'] += 1 # Se suma al arreglo de prestados
-                    print("Préstamo confirmado.") # Se confirma el prestamo 
+                    libro['cant_ej_ad'] -= 1 # Se resta porque el libro fue adquirido
+                    libro['cant_ej_pr'] += 1 # Se suma porque el libro fue prestado
+                    print("Prestamo confirmado.") # Se confirma el prestamo 
                 else:
-                    print("Préstamo cancelado.") # Se cancela el prestamo
+                    print("Prestamo cancelado.") # Se cancela el prestamo
             else:
-                print("No quedan ejemplares disponibles para prestar.")
+                print("No quedan libros disponibles para prestar.")
             return
     print("Libro no encontrado.")
+
+# Funcion para gestionar la devolución de un libro
+# Opcion2
+def gestionar_devolucion():
+    codigo = input("Ingrese el código del libro: ") # El codigo que se introduzca se va almacenar en la variable codigo
+    for libro in libros: # Itera sobre arreglo libros[]
+        if libro['cod'] == codigo: # Compara que el codigo que se introduzco en el input sea igual al que esta en el arreglo
+            if  libro['cant_ej_pr']> 0:
+                confirmar = input("¿Desea confirmar la devolucion? (si/no): ")
+                if confirmar == ("si") or confirmar == ("s"):
+                    libro['cant_ej_ad'] +=1 # Se suma porque el libro fue devuelto 
+                    libro['cant_ej_pr'] -=1 # Se resta porque la cantidad de libros prestados ahora es menor
+                    print("El libro fue devuelto correctamente")
+                else:
+                    print("La devolucion no se realizo")
+            else:
+                print("No hay libros prestados")
+            return
+        print("Libro no encontrado")
 
 
 
@@ -54,7 +75,7 @@ while respuesta != "salir" or respuesta == 6:
     if opcion == "1":
         gestionar_prestamo()
     elif opcion == "2":
-        print("gestionar_devolucion()")
+        gestionar_devolucion()
     elif opcion == "3":
         print("registrar_nuevo_libro()")
     elif opcion == "4":
